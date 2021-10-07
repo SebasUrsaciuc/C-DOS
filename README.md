@@ -22,3 +22,4 @@ C-DOS is a hobby "operating system" made for fun and passion.
 - [ ] Take trace of previous and next free segments in memory allocator header
 - [ ] Change "fstseg" to skip zones where there aren't free memory segments
 - [ ] Add more comments and documentation on the code
+- [ ] Replace static memory usage with dynamic memory usage where needed
