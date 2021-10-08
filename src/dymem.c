@@ -4,12 +4,12 @@
 
 memseg* fstseg;
 
-void initheap(uint32 addr, uint32 size) {
+void initheap(uint32 addr, uint32 maxsize) {
     fstseg = (memseg*) addr;
 
     fstseg->prev = null;
     fstseg->next = null;
-    fstseg->len = size - sizeof(fstseg);
+    fstseg->len = maxsize - sizeof(fstseg);
     fstseg->free = true;
 }
 

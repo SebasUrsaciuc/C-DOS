@@ -15,10 +15,10 @@ struct memseg {
 } attr(packed);
 
 /* Initializes the heap. */
-void initheap(uint32 addr, uint32 size);
+void initheap(uint32 addr, uint32 maxsize);
 
 /* Merges two memory segments.
-   All the segments between the given segment will be joined! */
+   All the segments between the boundaries will be joined! */
 void* mjoin(memseg* seg1, memseg* seg2);
 
 /* Splits a memory segment into two parts. */

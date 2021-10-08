@@ -143,9 +143,9 @@ int stoi(const char* a) {
 }
 
 char charup(char ch) {
-    return ch >= 65 && ch <= 91? ch + 0x20 : ch;
+    return ch >= 'A' && ch <= 'Z'? ch + 0x20 : ch;
 }
 
 char charlow(char ch) {
-    return ch >= 97 && ch <= 123? ch - 0x20 : ch;
+    return ch >= 'a' && ch <= 'z'? ch - 0x20 : ch;
 }

@@ -57,13 +57,13 @@ void clrs();
 /* Scrolls the screen in up direction. */
 void movs(uint8 rows);
 
-/* Get char from specified position. */
+/* Get screen value from specified position. */
 scrval peek(uint16 pos);
 
-/* Prints a char onto the screen. */
+/* Prints a screen value onto the screen. */
 void poke(scrval sv, uint16 pos);
 
-/* Prints a char onto the screen following the cursor. */
+/* Prints a screen value onto the screen following the cursor. */
 void putc(char ch);
 
 /* Prints a string onto the screen with newline. */
@@ -72,7 +72,7 @@ void puts(const char* str);
 /* Prints a string onto the screen without newline. */
 void sputs(const char* str);
 
-/* Formated print */
+/* Formated print. */
 void printf(const char* format, ...);
 
 /* Get a char from keyboard. */
