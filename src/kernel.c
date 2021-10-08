@@ -10,17 +10,18 @@
 void start() {
     clrs();
 
-    initheap(0x10000, 0xFFFF);
+    initheap(0x100000, 0x100000);
     initidt();
     initpit();
     initkb();
 
     puts("Kernel loaded successfully!\n");
 
+    char* in[128];
+
     while(true) {
         sputs("> ");
 
-        char in[128];
         gets(in);
 
         if(streqi(in, "reset")) {
