@@ -4,11 +4,6 @@
 mov [BOOT_DISK], Dl
 call readDisk
 
-; ENABLE A20 ;
-in Al, 0x92
-or Al, 2
-out 0x92, Al
-
 ; SWITCH TO PROTECTED MODE ;
 cli
 lgdt [GDT_desc]
