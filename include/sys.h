@@ -8,5 +8,8 @@ void hlt();
 /* Kernel panic. */
 void panic(const char* mot);
 
+/* Disables interrupts and halts. */
+void die();
+
 /* Wait for N time (in ms). */
 void wait(uint16 ms);

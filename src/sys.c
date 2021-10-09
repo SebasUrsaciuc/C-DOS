@@ -25,7 +25,12 @@ void panic(const char* mot) {
 
     puts("Try rebooting your system!");
 
+    die();
+}
+
+void die() {
     setintf(false);
+    
     hlt();
 }
 
