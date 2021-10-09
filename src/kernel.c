@@ -17,7 +17,7 @@ void start() {
 
     puts("Kernel loaded successfully!\n");
 
-    char* in[128];
+    char in[128];
 
     while(true) {
         sputs("> ");
