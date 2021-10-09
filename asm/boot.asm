@@ -1,24 +1,20 @@
 [org 0x7C00]
 
-; READ DISK ;
-mov [BOOT_DISK], Dl
-call readDisk
+jmp boot
 
-; SWITCH TO PROTECTED MODE ;
-cli
-lgdt [GDT_desc]
-mov EAX, CR0
-or EAX, 1
-mov CR0, EAX
+;;=================;;
+;; PARAMETER BLOCK ;;
+;;=================;;
+%include "asm/param.asm"
 
-; FAR JUMP ;
-call CODE_SEG:PROGRAM_SPACE
-jmp $
+;;================;;
+;; BOOT PROCEDURE ;;
+;;================;;
+boot:
+%include "asm/main.asm"
 
-; INCLUDE ;
-%include "asm/disk.asm"
-%include "asm/gdt.asm"
-
-; FILL BOOT SECT ;
+;;=====================;;
+;; UNUSED SPACE FILLER ;;
+;;=====================;;
 times (512 - 2) - ($ - $$) db 0
 dw 0xAA55
