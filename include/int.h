@@ -15,9 +15,6 @@
 #define PIC_INIT 0x11
 #define PIC_EOI 0x20
 
-#define isrtolow(f) ((uint32)f & 0xFFFF)
-#define isrtotop(f) ((uint32)f >> 16)
-
 #define IDT_SIZE 256
 
 typedef struct attr(packed) {

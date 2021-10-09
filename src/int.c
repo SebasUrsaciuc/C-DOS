@@ -24,11 +24,11 @@ void setintf(bool enabled) {
 
 void regint(void (*isr)(intf*), uint8 ic) {
     idt[ic] = (intd) {
-        isrtolow(isr),      // first 16 bits of function pointer
-        0x0008,             // code segment offset in GDT
-        0x0000,             // reserved
-        0x008E,             // flags
-        isrtotop(isr)       // last 16 bits of function pointer
+        (uint32) isr & 0xFFFF,  // first 16 bits of function pointer
+        0x0008,                 // code segment offset in GDT
+        0x0000,                 // reserved
+        0x008E,                 // flags
+        (uint32) isr >> 16      // last 16 bits of function pointer
     };
 }
 
