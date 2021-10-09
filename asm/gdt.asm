@@ -1,3 +1,5 @@
+jmp gdt_asm_end
+
 GDT_start:
     nullDesc:
         dw 0x0000
@@ -28,3 +30,5 @@ GDT_desc:
 
 CODE_SEG equ codeDesc - GDT_start
 DATA_SEG equ dataDesc - GDT_start
+
+gdt_asm_end:
