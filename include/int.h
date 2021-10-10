@@ -18,11 +18,11 @@
 #define IDT_SIZE 256
 
 typedef struct attr(packed) {
-    dword ip;
-    dword cs;
-    dword flags;
-    dword sp;
-    dword ss;
+    uint32 eip;
+    uint32 cs;
+    uint32 flags;
+    uint32 esp;
+    uint32 ss;
 } intf;
 
 typedef struct attr(packed) {
