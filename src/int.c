@@ -33,8 +33,8 @@ void regint(void (*isr)(intf*), uint8 ic) {
 }
 
 void endpic() {
-    outb(MASTERPIC_COMPORT, PIC_EOI);
-    outb(SLAVEPIC_COMPORT, PIC_EOI);
+    outb(MASTERPIC_COMPORT, PIC_COM_EOI);
+    outb(SLAVEPIC_COMPORT, PIC_COM_EOI);
 }
 
 void initidt() {
@@ -48,7 +48,7 @@ void initidt() {
         regint(picisr, i);
     }
     
-    lidt(idtdsc);
+    lidt(&idtdsc);
     setintf(true);
 }
 
@@ -58,8 +58,8 @@ void initpic() {
     mastermask = inb(MASTERPIC_DATAPORT);
     slavemask = inb(SLAVEPIC_DATAPORT);
 
-    outb(MASTERPIC_COMPORT, PIC_INIT);
-    outb(SLAVEPIC_COMPORT, PIC_INIT);
+    outb(MASTERPIC_COMPORT, PIC_COM_INIT);
+    outb(SLAVEPIC_COMPORT, PIC_COM_INIT);
 
     outb(MASTERPIC_DATAPORT, MASTERPIC_OFFSET);    // 32-39 ints - MASTER PIC
     outb(SLAVEPIC_DATAPORT, SLAVEPIC_OFFSET);     // 40-47 ints - SLAVE PIC
@@ -72,10 +72,10 @@ void initpic() {
     outb(SLAVEPIC_DATAPORT, slavemask);
 }
 
-void lidt(idtr id) {
+void lidt(idtr* id) {
     asm volatile (
         "lidt %0"
         :
-        : "m"(id)
+        : "m"(*id)
     );
 }

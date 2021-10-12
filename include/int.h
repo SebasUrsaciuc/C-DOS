@@ -12,17 +12,17 @@
 #define MASTERPIC_OFFSET 32
 #define SLAVEPIC_OFFSET (MASTERPIC_OFFSET + 8)
 
-#define PIC_INIT 0x11
-#define PIC_EOI 0x20
+#define PIC_COM_INIT 0x11
+#define PIC_COM_EOI 0x20
 
 #define IDT_SIZE 256
 
 typedef struct attr(packed) {
     uint32 eip;
-    uint32 cs;
+    uint16 cs;
     uint32 flags;
     uint32 esp;
-    uint32 ss;
+    uint16 ss;
 } intf;
 
 typedef struct attr(packed) {
@@ -54,4 +54,4 @@ void initidt();
 void initpic();
 
 /* Wrapper for LIDT assembly instruction. */
-void lidt(idtr id);
+void lidt(idtr* id);
