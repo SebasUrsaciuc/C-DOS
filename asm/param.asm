@@ -1,3 +1,4 @@
+bpb_OEM:                db "CDOSv000"
 bpb_BytesPerSect:       dw 512
 bpb_SectsPerCluster:    db 1
 bpb_ReservedSects:      dw 1
