@@ -1,8 +1,8 @@
-OUTPUT_FORMAT(binary)
-
 INPUT (
     out/tmp/ext.o
 )
+
+OUTPUT_FORMAT(binary)
 
 OUTPUT (
     out/tmp/kernel.bin
