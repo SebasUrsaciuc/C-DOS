@@ -2,39 +2,41 @@
 
 #include "def.h"
 
-#define HEAP_ALIGN 4
+typedef struct mem_seg mem_seg;
 
-#define malnsz(sz) (sz + (HEAP_ALIGN - (sz % HEAP_ALIGN)) % HEAP_ALIGN)
-
-typedef struct memseg memseg;
-struct memseg {
+struct mem_seg {
     uint32 len;
-    memseg* prev;
-    memseg* next;
+    mem_seg* prev;
+    mem_seg* next;
     bool free;
-} attr(packed);
+} PACKED;
+
+#define MEM_HEAP_ALIGN 4
+
+/* Get the size of an allocated memory segment. */
+#define mem_getAligned(sz) (sz + (MEM_HEAP_ALIGN - (sz % MEM_HEAP_ALIGN)) % MEM_HEAP_ALIGN)
+
+/* Get the size of an allocated memory segment. */
+#define mem_getSize(ptr) ((((mem_seg*) ptr) - 1)->len)
 
 /* Initializes the heap. */
-void initheap(uint32 addr, uint32 maxsize);
+void mem_init(uint32 addr, uint32 maxsize);
 
 /* Merges two memory segments.
    All the segments between the boundaries will be joined! */
-void* mjoin(memseg* seg1, memseg* seg2);
+void* mem_join(mem_seg* seg1, mem_seg* seg2);
 
 /* Splits a memory segment into two parts. */
-void msplit(memseg* seg, uint32 seg1sz, memseg* (*ret)[2]);
+void mem_split(mem_seg* seg, uint32 seg1sz, mem_seg* (*ret)[2]);
 
 /* Allocates a segment of memory. */
-void* malloc(uint32 size);
+void* mem_alloc(uint32 size);
 
 /* Allocates a segment of memory and clears it. */
-void* calloc(uint32 size);
+void* mem_calloc(uint32 size);
 
 /* Reallocates a segment of memory, resizing it. */
-void* realloc(void* ptr, uint32 size);
+void* mem_realloc(void* ptr, uint32 size);
 
 /* Frees an allocated memory segment. */
-void mfree(void* ptr);
-
-/* Get the size of an allocated memory segment. */
-uint32 msize(void* ptr);
+void mem_free(void* ptr);

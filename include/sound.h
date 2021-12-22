@@ -3,10 +3,10 @@
 #include "def.h"
 
 /* Start playing sound. */
-void playsnd(uint16 freq);
+void snd_play(uint16 freq);
 
 /* Stop playing sound. */
-void stopsnd();
+void snd_stop();
 
 /* Beep (this will pause the thread!). */
-void beep(uint16 freq, uint16 ms);
+void snd_beep(uint16 freq, uint16 ms);

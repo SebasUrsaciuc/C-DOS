@@ -1,43 +1,42 @@
 #include "sys.h"
 
 #include "int.h"
-#include "color.h"
+#include "vga.h"
 #include "io.h"
 #include "string.h"
 #include "kb.h"
 #include "pit.h"
+#include "sound.h"
 
-void hlt() {
-    asm("hlt");
+void sys_panic(const char* mot) {
+    vga_setCrs(VGA_CRS_OFF);
+    vga_setColor(VGA_CLR_BG_BLUE | VGA_CLR_FG_SILVER);
+    vga_clear();
+
+    io_println("Something went wrong during the kernel execution!");
+
+    io_putChar('\n');
+    io_println("The motivation of the panic is:");
+    io_println(mot);
+    io_putChar('\n');
+
+    io_println("Try rebooting your system!");
+
+    snd_play(800);
+
+    sys_kill();
 }
 
-void panic(const char* mot) {
-    setcurs(CUR_SH_DISABLED);
-    setclr(VGA_CLR_BG_BLUE | VGA_CLR_FG_SILVER);
-    clrs();
-
-    puts("Something went wrong during the kernel execution!");
-
-    puts("");
-    puts("The motivation of the panic is:");
-    puts(mot);
-    puts("");
-
-    puts("Try rebooting your system!");
-
-    die();
-}
-
-void die() {
-    setintf(false);
+void sys_kill() {
+    int_set(false);
     
-    hlt();
+    sys_hlt();
 }
 
-void wait(uint16 ms) {
-    uint32 end = gettime() + ms;
+void sys_wait(uint16 ms) {
+    uint32 end = pit_getTime() + ms;
 
-    while(gettime() < end) {
-        hlt();
+    while(pit_getTime() < end) {
+        sys_hlt();
     }
 }

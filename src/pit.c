@@ -5,22 +5,22 @@
 
 uint32 ticks = 0;
 
-void ISR pitisr(intf* ifr) {
+void INT_SR pit_ISR(int_fr* ifr) {
     ticks++;
 
-    endpic();
+    int_picEnd();
 }
 
-void initpit() {
+void pit_init() {
     uint32 div = PIT_INTERVAL / 100;
 
-    outb(PIT_COMPORT, PIT_COM_CH_0 | PIT_COM_ACC_HIGH | PIT_COM_MODE_2);
-    outb(PIT_DATAPORT_1, div & 0xFF);
-    outb(PIT_DATAPORT_1, (div >> 8) & 0xFF);
+    port_outb(PIT_CMDPORT, PIT_CMD_CH_0 | PIT_CMD_ACC_HIGH | PIT_CMD_MODE_2);
+    port_outb(PIT_DATAPORT_1, div & 0xFF);
+    port_outb(PIT_DATAPORT_1, (div >> 8) & 0xFF);
 
-    regint(pitisr, 32);
+    int_reg(pit_ISR, 32);
 }
 
-uint32 gettime() {
+uint32 pit_getTime() {
     return ticks * 10;
 }

@@ -1,6 +1,6 @@
 #include "port.h"
 
-void outb(uint16 port, uint8 data) {
+void port_outb(uint16 port, uint8 data) {
     asm volatile (
         "outb %0, %1"
         :
@@ -8,7 +8,7 @@ void outb(uint16 port, uint8 data) {
     );
 }
 
-uint8 inb(uint16 port) {
+uint8 port_inb(uint16 port) {
     uint8 data;
 
     asm volatile (
@@ -20,7 +20,7 @@ uint8 inb(uint16 port) {
     return data;
 }
 
-void outw(uint16 port, uint16 data) {
+void port_outw(uint16 port, uint16 data) {
     asm volatile (
         "outw %0, %1"
         :
@@ -28,7 +28,7 @@ void outw(uint16 port, uint16 data) {
     );
 }
 
-uint16 inw(uint16 port) {
+uint16 port_inw(uint16 port) {
     uint16 data;
 
     asm volatile (

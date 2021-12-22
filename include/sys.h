@@ -3,13 +3,13 @@
 #include "def.h"
 
 /* Halts the CPU until an interrupt is called (asm wrapper). */
-void hlt();
+#define sys_hlt() asm("hlt")
 
 /* Kernel panic. */
-void panic(const char* mot);
+void sys_panic(const char* mot);
 
 /* Disables interrupts and halts. */
-void die();
+void sys_kill();
 
 /* Wait for N time (in ms). */
-void wait(uint16 ms);
+void sys_wait(uint16 ms);

@@ -2,8 +2,14 @@
 
 #include "def.h"
 
-void outb(uint16 port, uint8 data);
-uint8 inb(uint16 port);
+/* Input byte through port. */
+uint8 port_inb(uint16 port);
 
-void outw(uint16 port, uint16 data);
-uint16 inw(uint16 port);
+/* Output byte through port. */
+void port_outb(uint16 port, uint8 data);
+
+/* Input word through port. */
+uint16 port_inw(uint16 port);
+
+/* Output word through port. */
+void port_outw(uint16 port, uint16 data);

@@ -1,7 +1,7 @@
 #include "string.h"
 
-bool strequ(const char* str1, const char* str2) {
-    strsz i = 0;
+bool str_equ(const char* str1, const char* str2) {
+    str_sz i = 0;
 
     while(true) {
         if(str1[i] != str2[i])
@@ -16,11 +16,11 @@ bool strequ(const char* str1, const char* str2) {
     return true;
 }
 
-bool streqi(const char* str1, const char* str2) {
-    strsz i = 0;
+bool str_eqi(const char* str1, const char* str2) {
+    str_sz i = 0;
 
     while(true) {
-        if(charup(str1[i]) != charup(str2[i]))
+        if(str_charUp(str1[i]) != str_charUp(str2[i]))
             return false;
 
         if(str1[i] == 0)
@@ -32,19 +32,19 @@ bool streqi(const char* str1, const char* str2) {
     return true;
 }
 
-void strcat(char* dest, const char* src) {
-    strsz sz = strlen(dest);
-    strsz osz = strlen(src);
+void str_cat(char* dest, const char* src) {
+    str_sz sz = str_len(dest);
+    str_sz osz = str_len(src);
 
-    for(strsz i = 0; i < osz; i++) {
+    for(str_sz i = 0; i < osz; i++) {
         dest[sz + i] = src[i];
     }
 
     dest[sz + osz] = 0;
 }
 
-uint strlen(const char* str) {
-    strsz sz = 0;
+uint str_len(const char* str) {
+    str_sz sz = 0;
 
     while(str[sz] != 0)
         sz++;
@@ -52,20 +52,20 @@ uint strlen(const char* str) {
     return sz;
 }
 
-void strclr(char* str) {
+void str_clear(char* str) {
     str[0] = 0;
 }
 
-void strcpy(char* dest, const char* src) {
-    for(strsz i = 0; src[i] != 0; i++) {
+void str_copy(char* dest, const char* src) {
+    for(str_sz i = 0; src[i] != 0; i++) {
         dest[i] = src[i];
     }
 }
 
-void itos(int v, char* buf) {
+void str_fromInt(int v, char* buf) {
     uint32 uv = v < 0? v * -1 : v;
     uint32 tmp = uv;
-    strsz i = 0;
+    str_sz i = 0;
 
     if(v < 0) {
         buf[i] = '-';
@@ -77,8 +77,9 @@ void itos(int v, char* buf) {
         tmp /= 10;
     }
 
-    if(i == 0)
+    if(i == 0) {
         i++;
+    }
 
     buf[i] = 0;
 
@@ -91,10 +92,10 @@ void itos(int v, char* buf) {
     } while(uv != 0);
 }
 
-void xtos(int x, char* buf) {    
+void str_fromHex(int x, char* buf) {    
     uint32 uv = (uint32) x;
     uint32 tmp = uv;
-    strsz i = 0;
+    str_sz i = 0;
 
     do {
         i++;
@@ -116,11 +117,11 @@ void xtos(int x, char* buf) {
     } while(uv != 0);
 }
 
-int stoi(const char* a) {
+int str_toInt(const char* a) {
     int result = 0;
     int8 or = 1;
 
-    strsz i = 0;
+    str_sz i = 0;
 
     if(a[i] == '-') {
         or *= -1;
@@ -140,12 +141,4 @@ int stoi(const char* a) {
     }
 
     return result * or;
-}
-
-char charup(char ch) {
-    return ch >= 'A' && ch <= 'Z'? ch + 0x20 : ch;
-}
-
-char charlow(char ch) {
-    return ch >= 'a' && ch <= 'z'? ch - 0x20 : ch;
 }

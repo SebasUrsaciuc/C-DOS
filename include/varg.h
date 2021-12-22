@@ -1,6 +1,6 @@
 #pragma once
 
-typedef void* valist;
+typedef void* va_list;
 
-#define vainit(f) (valist) (&f)
-#define vanext(l, t) *((t*) (l += sizeof(t)))
+#define va_init(f) (va_list) (&f)
+#define va_next(l, t) *((t*) (l += sizeof(t)))
