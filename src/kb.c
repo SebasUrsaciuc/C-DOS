@@ -3,10 +3,9 @@
 #include "port.h"
 #include "int.h"
 #include "sys.h"
-#include "key.h"
 #include "ps2.h"
 
-const char CHARMAP[CHAR_MAP_SIZE] = {
+const char KB_CHARMAP[KB_CHARMAP_SIZE] = {
 //  00   01   02   03   04   05   06   07   08   09   0A   0B   0C   0D   0E   0F
      0 ,  0 , '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',  0 ,'\t', // 00
     'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']',  0 ,  0 , 'a', 's', // 10
@@ -22,7 +21,7 @@ const char CHARMAP[CHAR_MAP_SIZE] = {
      0 ,  0 ,  0 ,  0 ,  0 , '/',  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0   // B0
 };
 
-const char SHIFTED_CHARMAP[CHAR_MAP_SIZE] = {
+const char KB_SHIFTED_CHARMAP[KB_CHARMAP_SIZE] = {
 //  00   01   02   03   04   05   06   07   08   09   0A   0B   0C   0D   0E   0F
      0 ,  0 , '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+',  0 ,'\t', // 00
     'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}',  0 ,  0 , 'A', 'S', // 10
@@ -41,17 +40,17 @@ const char SHIFTED_CHARMAP[CHAR_MAP_SIZE] = {
 bool shifted = false;
 bool caps = false;
 
-kbkey keybuf = { };
+kb_key keybuf = { };
 bool dblsc = false;
 volatile bool newsc = false;
 
-void ISR kbisr(intf* ifr) {
-    uint8 sc = inb(PS2CTRL_DATAPORT);
+void INT_SR kb_ISR(int_fr* ifr) {
+    uint8 sc = port_inb(PS2_CTRL_DATAPORT);
 
     if(sc == KB_DOUBLE_SC) {
         dblsc = true;
 
-        endpic();
+        int_picEnd();
         return;
     }
 
@@ -69,28 +68,28 @@ void ISR kbisr(intf* ifr) {
         dblsc = false;
     }
 
-    if(keybuf.sc < CHAR_MAP_SIZE) {
-        keybuf.ch = (shifted ^ caps? SHIFTED_CHARMAP : CHARMAP)[keybuf.sc];
+    if(keybuf.sc < KB_CHARMAP_SIZE) {
+        keybuf.ch = (shifted ^ caps? KB_SHIFTED_CHARMAP : KB_CHARMAP)[keybuf.sc];
     }
 
-    if(keybuf.sc == KB_LEFT_SHIFT || keybuf.sc == KB_RIGHT_SHIFT) {
+    if(keybuf.sc == KB_KEY_LEFT_SHIFT || keybuf.sc == KB_KEY_RIGHT_SHIFT) {
         shifted = keybuf.ev == press;
-    } else if(keybuf.sc == KB_CAPSLOCK && keybuf.ev == release) {
+    } else if(keybuf.sc == KB_KEY_CAPSLOCK && keybuf.ev == release) {
         caps = !caps;
     }
 
     newsc = true;
 
-    endpic();
+    int_picEnd();
 }
 
-void initkb() {
-    regint(kbisr, 33);
+void kb_init() {
+    int_reg(kb_ISR, 33);
 }
 
-kbkey getkey() {
+kb_key kb_getKey() {
     while(!newsc) {
-        hlt();
+        sys_hlt();
     }
 
     newsc = false;
