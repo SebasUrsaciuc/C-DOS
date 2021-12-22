@@ -34,13 +34,13 @@ LD_SCRIPT = link.ld
 LD_TARGET = elf_i386
 
 LD = ld
-LD_ARGS = -m$(LD_TARGET) -T$(LD_SCRIPT)
+LD_ARGS = -m$(LD_TARGET)
 
 # ASSEMBLER #
 ASM = nasm
 
 ifeq ($(DEBUG), false)
-all: assembly cxx bin clean
+all: assembly cxx link bin clean
 else
 all: $(OBJS)
 endif
@@ -50,10 +50,13 @@ assembly:
 	$(ASM) -felf$(BITS) $(ASM_PATH)/ext.asm -o $(TMP_PATH)/ext.o
 
 cxx: $(OBJS)
-	$(LD) $(LD_ARGS) $(OBJS)
+	$(LD) $(LD_ARGS) -r $(OBJS) -o $(TMP_PATH)/kernel.o
 
 $(TMP_PATH)/%.$(OBJS_EXT): $(SRC_PATH)/%.c
 	$(CC) $(CC_ARGS) $< -o $@
+
+link:
+	$(LD) $(LD_ARGS) -T$(LD_SCRIPT)
 
 bin:
 	cat $(TMP_PATH)/boot.bin $(TMP_PATH)/kernel.bin > $(OUT_PATH)/dos.bin

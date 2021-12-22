@@ -1,5 +1,6 @@
 INPUT (
     out/tmp/ext.o
+    out/tmp/kernel.o
 )
 
 OUTPUT_FORMAT(binary)
