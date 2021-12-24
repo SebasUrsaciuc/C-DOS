@@ -1,6 +1,6 @@
-#include "dymem.h"
+#include "sys/dymem.h"
 
-#include "mem.h"
+#include "misc/mem.h"
 
 mem_seg* fstseg;
 

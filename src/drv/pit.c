@@ -1,7 +1,7 @@
-#include "pit.h"
+#include "drv/pit.h"
 
-#include "port.h"
-#include "int.h"
+#include "cpu/port.h"
+#include "cpu/idt.h"
 
 uint32 ticks = 0;
 
@@ -18,7 +18,7 @@ void pit_init() {
     port_outb(PIT_DATAPORT_1, div & 0xFF);
     port_outb(PIT_DATAPORT_1, (div >> 8) & 0xFF);
 
-    int_reg(pit_ISR, 32);
+    idt_set(pit_ISR, 32);
 }
 
 uint32 pit_getTime() {

@@ -1,9 +1,9 @@
-#include "kb.h"
+#include "drv/kb.h"
 
-#include "port.h"
-#include "int.h"
+#include "drv/ps2.h"
+#include "cpu/port.h"
+#include "cpu/idt.h"
 #include "sys.h"
-#include "ps2.h"
 
 const char KB_CHARMAP[KB_CHARMAP_SIZE] = {
 //  00   01   02   03   04   05   06   07   08   09   0A   0B   0C   0D   0E   0F
@@ -84,7 +84,7 @@ void INT_SR kb_ISR(int_fr* ifr) {
 }
 
 void kb_init() {
-    int_reg(kb_ISR, 33);
+    idt_set(kb_ISR, 33);
 }
 
 kb_key kb_getKey() {

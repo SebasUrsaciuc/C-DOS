@@ -1,8 +1,8 @@
-#include "sound.h"
+#include "drv/sound.h"
 
-#include "port.h"
-#include "pit.h"
-#include "ps2.h"
+#include "drv/ps2.h"
+#include "drv/pit.h"
+#include "cpu/port.h"
 #include "sys.h"
 
 void snd_play(uint16 freq) {

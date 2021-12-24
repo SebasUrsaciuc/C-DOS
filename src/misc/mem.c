@@ -1,4 +1,4 @@
-#include "mem.h"
+#include "misc/mem.h"
 
 void mem_set(void* ptr, uint8 val, uint32 num) {
     uint8* tptr = (uint8*) ptr;

@@ -1,19 +1,22 @@
+#include "cpu/int.h"
+#include "cpu/idt.h"
+#include "drv/ps2.h"
+#include "drv/kb.h"
+#include "drv/pit.h"
+#include "drv/vga.h"
+#include "drv/disk.h"
+#include "misc/io.h"
+#include "misc/string.h"
+#include "sys/dymem.h"
+
 #include "def.h"
-#include "ps2.h"
-#include "io.h"
-#include "string.h"
-#include "kb.h"
-#include "int.h"
-#include "pit.h"
-#include "dymem.h"
-#include "vga.h"
-#include "disk.h"
 
 void start() {
     vga_clear();
 
     mem_init(0x100000, 0x100000);
     int_init();
+    idt_init();
     pit_init();
     kb_init();
 

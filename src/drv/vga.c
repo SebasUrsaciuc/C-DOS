@@ -1,6 +1,6 @@
-#include "vga.h"
+#include "drv/vga.h"
 
-#include "port.h"
+#include "cpu/port.h"
 
 const vga_crs VGA_CRS_OFF = { 0x0, 0x0 };
 const vga_crs VGA_CRS_LN = { 0xE, 0xF };

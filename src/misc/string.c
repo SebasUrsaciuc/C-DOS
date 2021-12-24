@@ -1,4 +1,4 @@
-#include "string.h"
+#include "misc/string.h"
 
 bool str_equ(const char* str1, const char* str2) {
     str_sz i = 0;

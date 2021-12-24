@@ -1,6 +1,6 @@
 #pragma once
 
-#include "port.h"
+#include "cpu/port.h"
 
 #define PS2_CTRL_DATAPORT 0x60
 #define PS2_CTRL_SYSPORT 0x61

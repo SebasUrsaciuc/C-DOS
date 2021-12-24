@@ -1,12 +1,12 @@
 #include "sys.h"
 
-#include "int.h"
-#include "vga.h"
-#include "io.h"
-#include "string.h"
-#include "kb.h"
-#include "pit.h"
-#include "sound.h"
+#include "cpu/int.h"
+#include "drv/vga.h"
+#include "drv/kb.h"
+#include "drv/pit.h"
+#include "drv/sound.h"
+#include "misc/io.h"
+#include "misc/string.h"
 
 void sys_panic(const char* mot) {
     vga_setCrs(VGA_CRS_OFF);

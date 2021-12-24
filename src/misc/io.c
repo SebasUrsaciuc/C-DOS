@@ -1,10 +1,10 @@
-#include "io.h"
+#include "misc/io.h"
 
-#include "vga.h"
-#include "kb.h"
-#include "string.h"
+#include "drv/sound.h"
+#include "drv/vga.h"
+#include "drv/kb.h"
+#include "misc/string.h"
 #include "varg.h"
-#include "sound.h"
 
 const vga_char empty = (vga_char) { ' ', VGA_CLR_NULL }; 
 

@@ -16,7 +16,7 @@ else
 OBJS_EXT = s
 endif
 
-SRCS = $(wildcard $(SRC_PATH)/*.c)
+SRCS = $(wildcard $(SRC_PATH)/*.c $(SRC_PATH)/**/*.c)
 OBJS = $(patsubst $(SRC_PATH)/%.c, $(TMP_PATH)/%.$(OBJS_EXT), $(SRCS))
 
 # COMPILER #
@@ -53,6 +53,7 @@ cxx: $(OBJS)
 	$(LD) $(LD_ARGS) -r $(OBJS) -o $(TMP_PATH)/kernel.o
 
 $(TMP_PATH)/%.$(OBJS_EXT): $(SRC_PATH)/%.c
+	mkdir -p $(@D)
 	$(CC) $(CC_ARGS) $< -o $@
 
 link:
@@ -62,4 +63,4 @@ bin:
 	cat $(TMP_PATH)/boot.bin $(TMP_PATH)/kernel.bin > $(OUT_PATH)/dos.bin
 
 clean:
-	rm $(TMP_PATH)/*
+	rm -r $(TMP_PATH)/*

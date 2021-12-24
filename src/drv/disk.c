@@ -1,6 +1,6 @@
-#include "disk.h"
+#include "drv/disk.h"
 
-#include "port.h"
+#include "cpu/port.h"
 
 void disk_prep(uint32 addr, uint8 sects, uint8 op) {
     addr &= DISK_LBA_28BIT_MASK;
