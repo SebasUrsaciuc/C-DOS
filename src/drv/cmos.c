@@ -9,6 +9,8 @@ uint8 cmos_read(uint8 reg) {
 }
 
 cmos_time cmos_getTime() {
+    while(cmos_isUpdating());
+
     uint8 regB = cmos_read(CMOS_REG_B);
 
     cmos_time t;
@@ -23,12 +25,12 @@ cmos_time cmos_getTime() {
     t.hour &= ~0x80;
 
     if(regB & 0b10) {
-        t.sec = cmos_toBCD(t.sec);
-        t.min = cmos_toBCD(t.min);
-        t.hour = cmos_toBCD(t.hour);
-        t.day = cmos_toBCD(t.day);
-        t.month = cmos_toBCD(t.month);
-        t.year = cmos_toBCD(t.year);
+        t.sec = cmos_fromBCD(t.sec);
+        t.min = cmos_fromBCD(t.min);
+        t.hour = cmos_fromBCD(t.hour);
+        t.day = cmos_fromBCD(t.day);
+        t.month = cmos_fromBCD(t.month);
+        t.year = cmos_fromBCD(t.year);
     }
 
     if(regB & 0b100) {

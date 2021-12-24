@@ -24,8 +24,14 @@ typedef struct {
 #define CMOS_REG_A 0x0A
 #define CMOS_REG_B 0x0B
 
-#define cmos_toBCD(v) (((v) & 0x0F) + (((v) / 16) * 10))
+/* Converts BCD time format to binary format. */
+#define cmos_fromBCD(v) (((v) & 0x0F) + (((v) / 16) * 10))
 
+/* Checks if the CMOS is being updated by the RTC. */
+#define cmos_isUpdating() (cmos_read(CMOS_REG_A) & 0x80);
+
+/* Reads CMOS register. */
 uint8 cmos_read(uint8 reg);
 
+/* Get actual CMOS time. */
 cmos_time cmos_getTime();
