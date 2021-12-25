@@ -10,14 +10,6 @@ typedef struct PACKED {
     uint16 ss;
 } int_fr, int_frame;
 
-typedef struct PACKED {
-    uint16 lowoff;
-    uint16 codseg;
-    uint8 res;
-    uint8 attr;
-    uint16 topoff;
-} int_gt, int_gate;
-
 typedef void (*int_hdl)(int_fr*);
 
 #define INT_MASTERPIC_CMDPORT 0x20

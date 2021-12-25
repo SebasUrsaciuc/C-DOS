@@ -2,8 +2,8 @@
 
 #include "sys.h"
 
-int_gate idt[IDT_SIZE];
-idt_desc dsc = { sizeof(idt) - 1, idt };
+idt_gate idt[IDT_SIZE];
+idt_reg idtDsc = { sizeof(idt) - 1, idt };
 
 void INT_SR idt_expISR(int_fr* ifr) {
     sys_panic("UNHANDLED_EXCEPTION");
@@ -22,12 +22,12 @@ void idt_init() {
         idt_set(idt_picISR, i);
     }
     
-    idt_load(&dsc);
+    idt_load(&idtDsc);
     int_set(true);
 }
 
 void idt_set(int_hdl isr, uint8 ic) {
-    idt[ic] = (int_gate) {
+    idt[ic] = (idt_gate) {
         (uint32) isr & 0xFFFF,  // first 16 bits of function pointer
         0x0008,                 // code segment offset in GDT
         0x0000,                 // reserved

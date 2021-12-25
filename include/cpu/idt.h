@@ -3,9 +3,17 @@
 #include "cpu/int.h"
 
 typedef struct PACKED {
+    uint16 botOff;
+    uint16 gdtCodeSeg;
+    uint8 res;
+    uint8 attr;
+    uint16 topOff;
+} idt_entry, idt_gate;
+
+typedef struct PACKED {
     uint16 limit;
-    int_gate* idtptr;
-} idt_dsc, idt_desc;
+    idt_gate* ptr;
+} idt_reg;
 
 #define IDT_SIZE 256
 
