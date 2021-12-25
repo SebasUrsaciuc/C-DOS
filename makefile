@@ -1,7 +1,3 @@
-# GENERAL #
-DEBUG = false
-BITS = 32
-
 # PATHS #
 ASM_PATH = asm
 SRC_PATH = src
@@ -10,24 +6,14 @@ OUT_PATH = out
 TMP_PATH = $(OUT_PATH)/tmp
 
 # FILES #
-ifeq ($(DEBUG), false)
-OBJS_EXT = o
-else
-OBJS_EXT = s
-endif
-
 SRCS = $(wildcard $(SRC_PATH)/*.c $(SRC_PATH)/**/*.c)
-OBJS = $(patsubst $(SRC_PATH)/%.c, $(TMP_PATH)/%.$(OBJS_EXT), $(SRCS))
+OBJS = $(patsubst $(SRC_PATH)/%.c, $(TMP_PATH)/%.o, $(SRCS))
 
 # COMPILER #
 CC_OPT_LVL = 2
 
 CC = gcc
-CC_ARGS = -fno-pic -ffreestanding -mno-red-zone -m$(BITS) -I$(INC_PATH) -c -mgeneral-regs-only -O$(CC_OPT_LVL)
-
-ifneq ($(DEBUG), false)
-CC_ARGS += -S
-endif
+CC_ARGS = -masm=intel -fno-pic -ffreestanding -mno-red-zone -m32 -I$(INC_PATH) -c -mgeneral-regs-only -O$(CC_OPT_LVL)
 
 # LINKER #
 LD_SCRIPT = link.ld
@@ -39,20 +25,16 @@ LD_ARGS = -m$(LD_TARGET)
 # ASSEMBLER #
 ASM = nasm
 
-ifeq ($(DEBUG), false)
 all: assembly cxx link bin clean
-else
-all: $(OBJS)
-endif
 
 assembly:
 	$(ASM) -fbin $(ASM_PATH)/boot.asm -o $(TMP_PATH)/boot.bin
-	$(ASM) -felf$(BITS) $(ASM_PATH)/ext.asm -o $(TMP_PATH)/ext.o
+	$(ASM) -felf32 $(ASM_PATH)/ext.asm -o $(TMP_PATH)/ext.o
 
 cxx: $(OBJS)
 	$(LD) $(LD_ARGS) -r $(OBJS) -o $(TMP_PATH)/kernel.o
 
-$(TMP_PATH)/%.$(OBJS_EXT): $(SRC_PATH)/%.c
+$(TMP_PATH)/%.o: $(SRC_PATH)/%.c
 	mkdir -p $(@D)
 	$(CC) $(CC_ARGS) $< -o $@
 
