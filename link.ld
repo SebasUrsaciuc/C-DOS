@@ -1,5 +1,4 @@
 INPUT (
-    out/tmp/ext.o
     out/tmp/kernel.o
 )
 

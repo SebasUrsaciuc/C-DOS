@@ -7,7 +7,10 @@ TMP_PATH = $(OUT_PATH)/tmp
 
 # FILES #
 SRCS = $(wildcard $(SRC_PATH)/*.c $(SRC_PATH)/**/*.c)
-OBJS = $(patsubst $(SRC_PATH)/%.c, $(TMP_PATH)/%.o, $(SRCS))
+ASMS = $(wildcard $(SRC_PATH)/*.s $(SRC_PATH)/**/*.s)
+
+C_OBJS = $(patsubst $(SRC_PATH)/%.c, $(TMP_PATH)/%.co, $(SRCS))
+S_OBJS = $(patsubst $(SRC_PATH)/%.s, $(TMP_PATH)/%.so, $(ASMS))
 
 # COMPILER #
 CC_OPT_LVL = 2
@@ -24,17 +27,21 @@ LD_ARGS = -m$(LD_TARGET)
 
 # ASSEMBLER #
 ASM = nasm
+ASM_ARGS = -felf32 -I$(SRC_PATH)
 
 all: assembly cxx link bin clean
 
 assembly:
-	$(ASM) -fbin $(ASM_PATH)/boot.asm -o $(TMP_PATH)/boot.bin
-	$(ASM) -felf32 $(ASM_PATH)/ext.asm -o $(TMP_PATH)/ext.o
+	$(ASM) -fbin $(SRC_PATH)/boot.asm -o $(TMP_PATH)/boot.bin
 
-cxx: $(OBJS)
-	$(LD) $(LD_ARGS) -r $(OBJS) -o $(TMP_PATH)/kernel.o
+cxx: $(S_OBJS) $(C_OBJS)
+	$(LD) $(LD_ARGS) -r $(S_OBJS) $(C_OBJS) -o $(TMP_PATH)/kernel.o
 
-$(TMP_PATH)/%.o: $(SRC_PATH)/%.c
+$(TMP_PATH)/%.so: $(SRC_PATH)/%.s
+	mkdir -p $(@D)
+	$(ASM) $(ASM_ARGS) $< -o $@
+
+$(TMP_PATH)/%.co: $(SRC_PATH)/%.c
 	mkdir -p $(@D)
 	$(CC) $(CC_ARGS) $< -o $@
 

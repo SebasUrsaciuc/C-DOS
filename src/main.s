@@ -1,7 +1,7 @@
 [bits 16]
 
 ; DEFINES ;
-%include "asm/gdt.asm"
+%include "cpu/gdt.s"
 extern start
 extern sys_kill
 
