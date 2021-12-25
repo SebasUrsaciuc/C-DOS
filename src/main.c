@@ -16,10 +16,12 @@ void start() {
     vga_clear();
 
     mem_init(0x100000, 0x100000);
-    int_init();
+    
     idt_init();
     pit_init();
     kb_init();
+
+    int_init();
 
     io_println("Kernel loaded successfully!\n");
 
