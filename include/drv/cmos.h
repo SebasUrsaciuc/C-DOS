@@ -28,7 +28,7 @@ typedef struct {
 #define cmos_fromBCD(v) (((v) & 0x0F) + (((v) / 16) * 10))
 
 /* Checks if the CMOS is being updated by the RTC. */
-#define cmos_isUpdating() (cmos_read(CMOS_REG_A) & 0x80);
+#define cmos_isUpdating() (cmos_read(CMOS_REG_A) & 0x80)
 
 /* Reads CMOS register. */
 uint8 cmos_read(uint8 reg);
