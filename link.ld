@@ -9,6 +9,7 @@ OUTPUT (
 )
 
 SECTIONS {
+    progSpace = 0x7E00;
     . = 0x7C00;
 
     .boot : {
@@ -19,7 +20,7 @@ SECTIONS {
         SHORT(0xAA55);
     }
 
-    . = 0x7E00;
+    . = progSpace;
 
     .text : ALIGN(0x1000) {
         *(.text);
@@ -37,4 +38,6 @@ SECTIONS {
         *(COMMON);
         *(.bss);
     }
+
+    progSects = (. - progSpace) / 512 + 1;
 }
