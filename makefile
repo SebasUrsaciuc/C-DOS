@@ -31,19 +31,19 @@ LD_ARGS = -melf_i386 -T$(LD_SCRIPT)
 ASM = as
 ASM_ARGS = -I$(SRC_PATH) --32 -O2 -nostartfiles -nostdlib
 
-all: compile clear
+all: link clear
 
-compile: $(S_OBJS) $(C_OBJS)
+link: $(S_OBJS) $(C_OBJS)
 	echo Linking $(C_OBJS_CNT) C object files and $(S_OBJS_CNT) ASM object files
 	$(LD) $(LD_ARGS) $(S_OBJS) $(C_OBJS) -o $(OUT)
 
 $(TMP_PATH)/%.so: $(SRC_PATH)/%.s
-	echo Compiling ASM source: $<
+	echo Assembling $<
 	mkdir -p $(@D)
 	$(ASM) $(ASM_ARGS) $< -o $@
 
 $(TMP_PATH)/%.co: $(SRC_PATH)/%.c
-	echo Compiling C source: $<
+	echo Compiling $<
 	mkdir -p $(@D)
 	$(CC) $(CC_ARGS) $< -o $@
 
