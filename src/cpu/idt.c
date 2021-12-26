@@ -3,7 +3,7 @@
 #include "sys.h"
 
 idt_gate idt[IDT_SIZE];
-idt_reg idtDsc = { sizeof(idt) - 1, idt };
+idt_reg idt_dsc = { sizeof(idt) - 1, idt };
 
 void INT_SR idt_expISR(int_fr* ifr) {
     sys_panic("UNHANDLED_EXCEPTION");
@@ -22,7 +22,7 @@ void idt_init() {
         idt_set(idt_picISR, i);
     }
     
-    idt_load(&idtDsc);
+    idt_load(&idt_dsc);
     int_set(true);
 }
 
