@@ -18,7 +18,7 @@ void pit_init() {
     port_outb(PIT_DATAPORT_1, div & 0xFF);
     port_outb(PIT_DATAPORT_1, (div >> 8) & 0xFF);
 
-    idt_set(pit_ISR, 32);
+    idt_setHard(pit_ISR, 32, IDT_GATE_PRIV_KERNEL);
 }
 
 uint32 pit_getTime() {

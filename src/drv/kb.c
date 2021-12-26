@@ -84,7 +84,7 @@ void INT_SR kb_ISR(int_fr* ifr) {
 }
 
 void kb_init() {
-    idt_set(kb_ISR, 33);
+    idt_setHard(kb_ISR, 33, IDT_GATE_PRIV_KERNEL);
 }
 
 kb_key kb_getKey() {
