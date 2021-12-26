@@ -1,12 +1,4 @@
-INPUT (
-    out/tmp/kernel.o
-)
-
 OUTPUT_FORMAT(binary)
-
-OUTPUT (
-    out/dos.bin
-)
 
 SECTIONS {
     . = 0x7C00;
