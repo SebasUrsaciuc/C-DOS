@@ -12,7 +12,7 @@
 
 #include "def.h"
 
-void start() {
+void kmain() {
     vga_clear();
 
     mem_init(0x100000, 0x100000);

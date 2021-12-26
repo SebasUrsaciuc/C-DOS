@@ -1,18 +1,18 @@
 #include "cpu/port.h"
 
 void port_outb(uint16 port, uint8 data) {
-    asm volatile (
+    asmv (
         "out %0, %1"
         :
-        : "Nd"(port), "a"(data)
+        : "a"(data), "Nd"(port)
     );
 }
 
 uint8 port_inb(uint16 port) {
     uint8 data;
 
-    asm volatile (
-        "in %0, %1"
+    asmv (
+        "in %1, %0"
         : "=a"(data)
         : "Nd"(port)
     );
@@ -21,18 +21,18 @@ uint8 port_inb(uint16 port) {
 }
 
 void port_outw(uint16 port, uint16 data) {
-    asm volatile (
+    asmv (
         "out %0, %1"
         :
-        : "Nd"(port), "a"(data)
+        : "a"(data), "Nd"(port)
     );
 }
 
 uint16 port_inw(uint16 port) {
     uint16 data;
 
-    asm volatile (
-        "in %0, %1"
+    asmv (
+        "in %1, %0"
         : "=a"(data)
         : "Nd"(port)
     );
